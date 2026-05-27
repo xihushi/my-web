@@ -437,6 +437,35 @@
       border-top: 1px solid var(--line);
     }
 
+    .timeline-more {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-more summary {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      list-style: none;
+      font-weight: 850;
+    }
+
+    .timeline-more summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .timeline-more svg {
+      transition: transform .2s ease;
+      flex: 0 0 auto;
+    }
+
+    .timeline-more[open] svg {
+      transform: rotate(180deg);
+    }
+
     .timeline-item {
       display: grid;
       grid-template-columns: 130px minmax(0, 1fr) auto;
@@ -479,9 +508,13 @@
 
     .planner {
       display: grid;
-      grid-template-columns: minmax(0, .92fr) minmax(340px, 1.08fr);
+      grid-template-columns: minmax(0, 1.55fr) minmax(260px, .65fr);
       gap: 14px;
       align-items: start;
+    }
+
+    .memory-planner {
+      grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr);
     }
 
     .panel {
@@ -506,12 +539,53 @@
       font-weight: 560;
     }
 
+    .weekend-plan-panel {
+      padding: 26px;
+    }
+
+    .weekend-plan-panel .weekend-title strong {
+      font-size: 24px;
+    }
+
+    .weekend-plan-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: -4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .weekend-plan-meta span {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 0 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .36);
+    }
+
+    .weekend-ideas-panel {
+      padding: 16px;
+      background: rgba(251, 250, 246, .66);
+    }
+
+    .weekend-ideas-panel .weekend-title {
+      margin-bottom: 8px;
+    }
+
+    .weekend-ideas-panel .weekend-title strong {
+      font-size: 16px;
+    }
+
     .progress {
-      height: 10px;
+      height: 12px;
       border-radius: 999px;
       background: rgba(41, 37, 36, .1);
       overflow: hidden;
-      margin: 16px 0;
+      margin: 18px 0;
     }
 
     .progress span {
@@ -524,16 +598,16 @@
 
     .task-list {
       display: grid;
-      gap: 10px;
-      margin-top: 12px;
+      gap: 12px;
+      margin-top: 14px;
     }
 
     .task {
       display: flex;
       align-items: center;
       gap: 10px;
-      min-height: 48px;
-      padding: 10px 12px;
+      min-height: 58px;
+      padding: 12px 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255, 255, 255, .52);
@@ -550,6 +624,8 @@
       flex: 1;
       line-height: 1.4;
       overflow-wrap: anywhere;
+      font-size: 16px;
+      font-weight: 720;
     }
 
     .task.done span {
@@ -614,19 +690,20 @@
 
     .idea-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 12px;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .idea {
-      min-height: 78px;
-      padding: 12px;
+      min-height: 52px;
+      padding: 10px;
       border-radius: var(--radius);
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, .52);
       color: var(--muted);
-      line-height: 1.55;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .history-panel {
@@ -911,12 +988,19 @@
       align-items: start;
     }
 
+    .album-shell.locked {
+      grid-template-columns: 1fr;
+    }
+
     .album-lock {
       display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 10px;
+      align-items: start;
     }
 
     .album-status {
+      grid-column: 1 / -1;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.65;
@@ -1009,11 +1093,54 @@
 
     .memory-wall {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
       gap: 12px;
+      min-width: 0;
+    }
+
+    .memory-more {
+      grid-column: 1 / -1;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(251, 250, 246, .58);
+      overflow: hidden;
+    }
+
+    .memory-more summary {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 14px;
+      color: var(--muted);
+      cursor: pointer;
+      list-style: none;
+      font-weight: 850;
+    }
+
+    .memory-more summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .memory-more svg {
+      transition: transform .2s ease;
+      flex: 0 0 auto;
+    }
+
+    .memory-more[open] svg {
+      transform: rotate(180deg);
+    }
+
+    .memory-more-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 0 14px 14px;
     }
 
     .note {
+      min-width: 0;
       min-height: 150px;
       display: flex;
       flex-direction: column;
@@ -1024,6 +1151,12 @@
       padding: 16px;
       background: rgba(251, 250, 246, .84);
       box-shadow: none;
+    }
+
+    .note h3 {
+      margin: 0 0 10px;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
     }
 
     .note p {
@@ -1041,12 +1174,19 @@
       color: var(--rose);
       font-weight: 800;
       font-size: 13px;
+      min-width: 0;
+    }
+
+    .note footer > span:first-child {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     .note-actions {
       display: flex;
       align-items: center;
       gap: 4px;
+      flex: 0 0 auto;
     }
 
     .footer {
@@ -1058,10 +1198,48 @@
       border-top: 1px solid var(--line);
     }
 
+    .cloud-sync {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, auto);
+      gap: 14px;
+      align-items: end;
+    }
+
+    .cloud-sync strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .cloud-sync p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .cloud-auth {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .cloud-user {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
     @media (max-width: 920px) {
       .hero,
       .planner,
-      .album-shell {
+      .album-shell,
+      .album-lock {
         grid-template-columns: 1fr;
       }
 
@@ -1102,7 +1280,8 @@
       }
 
       .topbar,
-      .section-head {
+      .section-head,
+      .cloud-sync {
         align-items: flex-start;
         flex-direction: column;
       }
@@ -1122,13 +1301,20 @@
       .quick-stats,
       .grid,
       .memory-wall,
+      .memory-more-grid,
       .idea-grid,
       .album-grid,
       .weight-summary,
       .weight-form,
       .weight-forms,
-      .person-weight-form {
+      .person-weight-form,
+      .cloud-sync,
+      .cloud-auth {
         grid-template-columns: 1fr;
+      }
+
+      .cloud-user {
+        justify-content: flex-start;
       }
 
       .weight-chart-wrap {
@@ -1212,6 +1398,23 @@
         <a href="#memory">小记忆</a>
       </nav>
     </header>
+
+    <section class="panel cloud-sync" id="cloudSyncPanel">
+      <div>
+        <strong>云端同步</strong>
+        <p id="cloudStatus">未配置云数据库时，记录只会保存在当前浏览器。配置 Supabase 后，两个人登录同一个网页即可共享记录和相册。</p>
+      </div>
+      <form class="cloud-auth" id="cloudAuthForm">
+        <input class="field" id="cloudEmail" type="email" autocomplete="email" placeholder="邮箱">
+        <input class="field" id="cloudPassword" type="password" autocomplete="current-password" placeholder="密码">
+        <button class="small-btn" type="submit">登录</button>
+        <button class="small-btn" type="button" id="cloudSignUp">注册</button>
+      </form>
+      <div class="cloud-user hidden" id="cloudUserBox">
+        <span id="cloudUserEmail"></span>
+        <button class="small-btn" type="button" id="cloudLogout">退出</button>
+      </div>
+    </section>
 
     <section class="hero" id="days">
       <div class="hero-copy">
@@ -1396,7 +1599,7 @@
       </div>
 
       <div class="planner">
-        <article class="panel">
+        <article class="panel weekend-plan-panel">
           <div class="weekend-title">
             <strong id="weekendRange">这个周末</strong>
             <button class="icon-btn" id="resetWeekend" title="重置本周末打卡">
@@ -1404,6 +1607,10 @@
                 <path d="M3 12a9 9 0 1 0 3-6.7M3 4v6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
+          </div>
+          <div class="weekend-plan-meta">
+            <span id="weekendAutoHint">每周一自动更新下一周周计划</span>
+            <span>完成后会进入周末历史</span>
           </div>
           <div class="progress" aria-label="完成进度"><span id="progressBar"></span></div>
           <div class="task-list" id="taskList"></div>
@@ -1413,7 +1620,7 @@
           </form>
         </article>
 
-        <article class="panel">
+        <article class="panel weekend-ideas-panel">
           <div class="weekend-title">
             <strong>周末灵感</strong>
             <button class="icon-btn" id="randomIdea" title="随机换一组灵感">
@@ -1449,48 +1656,6 @@
 
     </section>
 
-    <section class="section" id="album">
-      <div class="section-head">
-        <div>
-          <h2>私密相册</h2>
-          <p>只存在当前浏览器里的加密相册，照片不会上传到任何地方。</p>
-        </div>
-      </div>
-
-      <div class="album-shell">
-        <article class="panel">
-          <div class="weekend-title">
-            <strong>相册密码</strong>
-            <button class="icon-btn hidden" id="albumLock" title="锁定相册">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v10H6V11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-          <form class="album-lock" id="albumAuthForm">
-            <input class="field" id="albumPassword" type="password" minlength="4" autocomplete="new-password" placeholder="设置或输入相册密码">
-            <button class="small-btn" type="submit" id="albumAuthButton">解锁相册</button>
-            <p class="album-status" id="albumStatus">第一次使用会把这个密码设置为相册密码。之后上传的照片会在本地加密保存。</p>
-          </form>
-        </article>
-
-        <article class="panel">
-          <div class="weekend-title">
-            <strong>我们的私密照片</strong>
-            <span class="history-meta" id="albumCount">未解锁</span>
-          </div>
-          <label class="album-upload hidden" id="albumUploadBox">
-            <input id="albumFiles" type="file" accept="image/*" multiple>
-            <span>点击选择照片。上传后会用相册密码加密，只保存在这个浏览器里。</span>
-          </label>
-          <div style="height: 12px"></div>
-          <div class="album-grid" id="albumGrid">
-            <div class="album-empty">输入相册密码后查看你们的私密照片。</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
     <section class="section" id="memory">
       <div class="section-head">
         <div>
@@ -1498,7 +1663,7 @@
           <p>把那些不一定宏大、但值得留下的瞬间放在这里。</p>
         </div>
       </div>
-      <div class="planner">
+      <div class="planner memory-planner">
         <form class="panel" id="memoryForm">
           <div class="weekend-title">
             <strong id="memoryFormTitle">新增一条</strong>
@@ -1516,16 +1681,64 @@
       </div>
     </section>
 
+    <section class="section" id="album">
+      <div class="section-head">
+        <div>
+          <h2>私密相册</h2>
+          <p>只存在当前浏览器里的加密相册，照片不会上传到任何地方。</p>
+        </div>
+      </div>
+
+      <div class="album-shell locked" id="albumShell">
+        <article class="panel">
+          <div class="weekend-title">
+            <strong>相册密码</strong>
+            <button class="icon-btn hidden" id="albumLock" title="锁定相册">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v10H6V11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <form class="album-lock" id="albumAuthForm">
+            <input class="field" id="albumPassword" type="password" minlength="4" autocomplete="new-password" placeholder="设置或输入相册密码">
+            <button class="small-btn" type="submit" id="albumAuthButton">解锁相册</button>
+            <p class="album-status" id="albumStatus">第一次使用会把这个密码设置为相册密码。之后上传的照片会在本地加密保存。</p>
+          </form>
+        </article>
+
+        <article class="panel hidden" id="albumPhotosPanel">
+          <div class="weekend-title">
+            <strong>我们的私密照片</strong>
+            <span class="history-meta" id="albumCount">未解锁</span>
+          </div>
+          <label class="album-upload hidden" id="albumUploadBox">
+            <input id="albumFiles" type="file" accept="image/*" multiple>
+            <span>点击选择照片。上传后会用相册密码加密，只保存在这个浏览器里。</span>
+          </label>
+          <div style="height: 12px"></div>
+          <div class="album-grid" id="albumGrid">
+            <div class="album-empty">输入相册密码后查看你们的私密照片。</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <footer class="footer">
       陈诏君和李涛的私人关系档案。愿每个周末都不是复制粘贴，而是又多了一点点“我们”。
     </footer>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const startDate = new Date("2025-11-11T00:00:00");
     const weekendKeyPrefix = "couple-weekend-";
     const albumMetaKey = "couple-album-meta";
     const weightRecordsKey = "couple-weight-records";
+    const memoryRecordsKey = "couple-memories";
+    const cloudConfig = {
+      supabaseUrl: "https://sguezfkodsmgzetfrtyb.supabase.co",
+      supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNndWV6ZmtvZHNtZ3pldGZydHliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NDY5NTIsImV4cCI6MjA5NTQyMjk1Mn0.LAsYnoFLAXSCfp_0unqnlpEzzYReVqH7aDPehgiDEMg"
+    };
     const weightGoalDate = new Date("2026-10-01T00:00:00");
     const weightGoals = {
       zhaojun: { name: "陈诏君", target: 110, color: "#9f2738" },
@@ -1533,6 +1746,17 @@
     };
     let albumKey = null;
     let albumObjectUrls = [];
+    const cloudState = {
+      client: null,
+      user: null,
+      loaded: false,
+      loading: false,
+      data: {
+        weekends: {},
+        weights: null,
+        memories: null
+      }
+    };
     const baseEvents = [
       {
         title: "陈诏君生日",
@@ -1573,6 +1797,161 @@
         localStorage.setItem(key, JSON.stringify(value));
       }
     };
+
+    function cloudConfigured() {
+      return Boolean(cloudConfig.supabaseUrl && cloudConfig.supabaseAnonKey && window.supabase);
+    }
+
+    function cloudActive() {
+      return Boolean(cloudState.client && cloudState.user && cloudState.loaded);
+    }
+
+    function setCloudStatus(message) {
+      document.querySelector("#cloudStatus").textContent = message;
+    }
+
+    function renderCloudAuth() {
+      const configured = cloudConfigured();
+      document.querySelector("#cloudAuthForm").classList.toggle("hidden", !configured || Boolean(cloudState.user));
+      document.querySelector("#cloudUserBox").classList.toggle("hidden", !configured || !cloudState.user);
+      document.querySelector("#cloudUserEmail").textContent = cloudState.user?.email || "";
+
+      if (!configured) {
+        setCloudStatus("云数据库尚未配置：先在 supabase-schema.sql 建库，再把 Supabase URL 和 anon key 填到 index.html 的 cloudConfig。");
+      } else if (cloudState.user && cloudState.loaded) {
+        setCloudStatus("云端同步已开启。周末记录、体重、便签和私密相册会同步给登录的两个人。");
+      } else if (cloudState.user) {
+        setCloudStatus("正在读取云端记录...");
+      } else {
+        setCloudStatus("请登录云端账号。登录后，两个人在不同设备填写的内容都会同步。");
+      }
+    }
+
+    function reportCloudError(error) {
+      console.error(error);
+      setCloudStatus("云端同步失败，请检查 Supabase 配置、登录状态和 RLS 策略。");
+    }
+
+    async function initCloud() {
+      if (!cloudConfigured()) {
+        renderCloudAuth();
+        return;
+      }
+
+      cloudState.client = window.supabase.createClient(cloudConfig.supabaseUrl, cloudConfig.supabaseAnonKey);
+      const { data } = await cloudState.client.auth.getSession();
+      cloudState.user = data.session?.user || null;
+
+      cloudState.client.auth.onAuthStateChange(async (_event, session) => {
+        cloudState.user = session?.user || null;
+        cloudState.loaded = false;
+        renderCloudAuth();
+        if (cloudState.user) await loadCloudData();
+        renderTasks();
+        renderWeightPlan();
+        renderMemories();
+        await renderAlbum();
+      });
+
+      renderCloudAuth();
+      if (cloudState.user) await loadCloudData();
+    }
+
+    async function loadCloudData() {
+      if (!cloudState.client || !cloudState.user || cloudState.loading) return;
+      cloudState.loading = true;
+      renderCloudAuth();
+      try {
+        const [weekends, weights, memories] = await Promise.all([
+          cloudState.client.from("weekend_plans").select("week_start,tasks").order("week_start", { ascending: false }),
+          cloudState.client.from("weight_records").select("date,zhaojun,litao,note").order("date", { ascending: true }),
+          cloudState.client.from("memories").select("id,title,text,date").order("date", { ascending: true })
+        ]);
+        if (weekends.error) throw weekends.error;
+        if (weights.error) throw weights.error;
+        if (memories.error) throw memories.error;
+
+        cloudState.data.weekends = Object.fromEntries(
+          weekends.data.map(record => [`${weekendKeyPrefix}${record.week_start}`, Array.isArray(record.tasks) ? record.tasks : []])
+        );
+        cloudState.data.weights = weights.data.map(record => ({
+          date: record.date,
+          zhaojun: record.zhaojun == null ? null : Number(record.zhaojun),
+          litao: record.litao == null ? null : Number(record.litao),
+          note: record.note || ""
+        }));
+        cloudState.data.memories = memories.data.map(memory => ({
+          id: memory.id,
+          title: memory.title,
+          text: memory.text,
+          date: memory.date || ""
+        }));
+        cloudState.loaded = true;
+      } catch (error) {
+        reportCloudError(error);
+      } finally {
+        cloudState.loading = false;
+        renderCloudAuth();
+      }
+    }
+
+    async function syncWeekendToCloud(key, tasks) {
+      if (!cloudActive()) return;
+      const { error } = await cloudState.client.from("weekend_plans").upsert({
+        week_start: key.replace(weekendKeyPrefix, ""),
+        tasks,
+        updated_at: new Date().toISOString()
+      });
+      if (error) reportCloudError(error);
+    }
+
+    async function syncWeightRecordsToCloud(records) {
+      if (!cloudActive()) return;
+      const dates = records.map(record => record.date);
+      const existing = await cloudState.client.from("weight_records").select("date");
+      if (existing.error) {
+        reportCloudError(existing.error);
+        return;
+      }
+      const staleDates = existing.data.map(record => record.date).filter(date => !dates.includes(date));
+      if (staleDates.length) {
+        const removed = await cloudState.client.from("weight_records").delete().in("date", staleDates);
+        if (removed.error) reportCloudError(removed.error);
+      }
+      if (!records.length) return;
+      const { error } = await cloudState.client.from("weight_records").upsert(records.map(record => ({
+        date: record.date,
+        zhaojun: Number.isFinite(record.zhaojun) ? record.zhaojun : null,
+        litao: Number.isFinite(record.litao) ? record.litao : null,
+        note: record.note || "",
+        updated_at: new Date().toISOString()
+      })));
+      if (error) reportCloudError(error);
+    }
+
+    async function syncMemoriesToCloud(memories) {
+      if (!cloudActive()) return;
+      const ids = memories.map(memory => memory.id);
+      const existing = await cloudState.client.from("memories").select("id");
+      if (existing.error) {
+        reportCloudError(existing.error);
+        return;
+      }
+      const staleIds = existing.data.map(memory => memory.id).filter(id => !ids.includes(id));
+      if (staleIds.length) {
+        const removed = await cloudState.client.from("memories").delete().in("id", staleIds);
+        if (removed.error) reportCloudError(removed.error);
+      }
+      if (!memories.length) return;
+      const { error } = await cloudState.client.from("memories").upsert(memories.map(memory => ({
+        id: memory.id,
+        title: memory.title,
+        text: memory.text,
+        date: memory.date || null,
+        updated_at: new Date().toISOString()
+      })));
+      if (error) reportCloudError(error);
+    }
 
     const fmt = new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric" });
     const lunarFmt = new Intl.DateTimeFormat("zh-CN-u-ca-chinese", { year: "numeric", month: "numeric", day: "numeric" });
@@ -1633,6 +2012,29 @@
     }
 
     function getAllAlbumRecords() {
+      if (cloudState.client && cloudState.user) {
+        return cloudState.client
+          .from("album_photos")
+          .select("id,file_name,file_type,file_path,iv,created_at")
+          .order("created_at", { ascending: false })
+          .then(async result => {
+            if (result.error) throw result.error;
+            return Promise.all(result.data.map(async record => {
+              const download = await cloudState.client.storage.from("couple-album").download(record.file_path);
+              if (download.error) throw download.error;
+              return {
+                id: record.id,
+                name: record.file_name,
+                type: record.file_type,
+                createdAt: new Date(record.created_at).getTime(),
+                iv: record.iv,
+                data: await download.data.arrayBuffer(),
+                storagePath: record.file_path
+              };
+            }));
+          });
+      }
+
       return albumTransaction("readonly", store => {
         return new Promise((resolve, reject) => {
           const request = store.getAll();
@@ -1643,16 +2045,57 @@
     }
 
     function putAlbumRecord(record) {
+      if (cloudState.client && cloudState.user) {
+        const filePath = `${record.id}.bin`;
+        return cloudState.client.storage
+          .from("couple-album")
+          .upload(filePath, new Blob([record.data], { type: "application/octet-stream" }), { upsert: true })
+          .then(async upload => {
+            if (upload.error) throw upload.error;
+            const result = await cloudState.client.from("album_photos").upsert({
+              id: record.id,
+              file_name: record.name,
+              file_type: record.type,
+              file_path: filePath,
+              iv: record.iv,
+              created_at: new Date(record.createdAt).toISOString()
+            });
+            if (result.error) throw result.error;
+          });
+      }
+
       return albumTransaction("readwrite", store => store.put(record));
     }
 
     function deleteAlbumRecord(id) {
+      if (cloudState.client && cloudState.user) {
+        return cloudState.client
+          .from("album_photos")
+          .select("file_path")
+          .eq("id", id)
+          .single()
+          .then(async result => {
+            if (result.error) throw result.error;
+            const removedFile = await cloudState.client.storage.from("couple-album").remove([result.data.file_path]);
+            if (removedFile.error) throw removedFile.error;
+            const removedRecord = await cloudState.client.from("album_photos").delete().eq("id", id);
+            if (removedRecord.error) throw removedRecord.error;
+          });
+      }
+
       return albumTransaction("readwrite", store => store.delete(id));
     }
 
     function todayStart() {
       const now = new Date();
       return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    function localIso(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
 
     function daysBetween(a, b) {
@@ -1697,7 +2140,7 @@
     function getWeekendRange() {
       const now = todayStart();
       const day = now.getDay();
-      const saturdayOffset = (6 - day + 7) % 7;
+      const saturdayOffset = day === 0 ? -1 : (6 - day + 7) % 7;
       const saturday = new Date(now);
       saturday.setDate(now.getDate() + saturdayOffset);
       const sunday = new Date(saturday);
@@ -1749,7 +2192,7 @@
       document.querySelector("#nextEventText").textContent = `到 ${next.title}`;
 
       const timeline = document.querySelector("#timeline");
-      timeline.innerHTML = events.map(event => `
+      const renderEvent = event => `
         <article class="timeline-item">
           <div class="timeline-date">${fmt.format(event.date)}</div>
           <div class="timeline-title">
@@ -1758,19 +2201,47 @@
           </div>
           <div class="timeline-count">${event.days === 0 ? "就是今天" : `${event.days} 天后`}</div>
         </article>
-      `).join("");
+      `;
+      const visibleEvents = events.slice(0, 3);
+      const hiddenEvents = events.slice(3);
+      timeline.innerHTML = `
+        ${visibleEvents.map(renderEvent).join("")}
+        ${hiddenEvents.length ? `
+          <details class="timeline-more" data-hidden-count="${hiddenEvents.length}">
+            <summary>
+              <span class="timeline-more-label">展开剩余 ${hiddenEvents.length} 个重要日子</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </summary>
+            ${hiddenEvents.map(renderEvent).join("")}
+          </details>
+        ` : ""}
+      `;
+      const timelineMore = timeline.querySelector(".timeline-more");
+      if (timelineMore) {
+        const label = timelineMore.querySelector(".timeline-more-label");
+        const hiddenCount = timelineMore.dataset.hiddenCount;
+        timelineMore.addEventListener("toggle", () => {
+          label.textContent = timelineMore.open ? "收起重要日子" : `展开剩余 ${hiddenCount} 个重要日子`;
+        });
+      }
 
       const { saturday, sunday } = getWeekendRange();
       document.querySelector("#weekendRange").textContent = `${saturday.getMonth() + 1}.${saturday.getDate()} - ${sunday.getMonth() + 1}.${sunday.getDate()} 周末计划`;
+      const nextMonday = new Date(sunday);
+      nextMonday.setDate(sunday.getDate() + 1);
+      document.querySelector("#weekendAutoHint").textContent = `${nextMonday.getMonth() + 1}.${nextMonday.getDate()} 周一自动更新下一周周计划`;
     }
 
     function taskKey() {
       const { saturday } = getWeekendRange();
-      return `${weekendKeyPrefix}${saturday.toISOString().slice(0, 10)}`;
+      return `${weekendKeyPrefix}${localIso(saturday)}`;
     }
 
     function getTasks() {
       const key = taskKey();
+      if (cloudActive() && cloudState.data.weekends[key]) return cloudState.data.weekends[key];
       const saved = store.get(key, null);
       if (saved) return saved;
       const tasks = defaultTasks.map(text => ({ text, done: false }));
@@ -1779,7 +2250,12 @@
     }
 
     function saveTasks(tasks) {
-      store.set(taskKey(), tasks);
+      const key = taskKey();
+      store.set(key, tasks);
+      if (cloudActive()) {
+        cloudState.data.weekends[key] = tasks;
+        syncWeekendToCloud(key, tasks);
+      }
     }
 
     function renderTasks() {
@@ -1815,6 +2291,21 @@
     }
 
     function getWeekendHistory() {
+      if (cloudActive()) {
+        return Object.entries(cloudState.data.weekends)
+          .map(([key, tasks]) => {
+            const date = dateFromWeekendKey(key);
+            return {
+              key,
+              date,
+              label: weekendLabel(date),
+              tasks: Array.isArray(tasks) ? tasks : []
+            };
+          })
+          .filter(record => !Number.isNaN(record.date.getTime()))
+          .sort((a, b) => b.date - a.date);
+      }
+
       return Object.keys(localStorage)
         .filter(key => key.startsWith(weekendKeyPrefix))
         .map(key => {
@@ -1866,7 +2357,7 @@
     }
 
     function todayIso() {
-      return todayStart().toISOString().slice(0, 10);
+      return localIso(todayStart());
     }
 
     function formatWeight(value) {
@@ -1874,7 +2365,8 @@
     }
 
     function getWeightRecords() {
-      return store.get(weightRecordsKey, [])
+      const source = cloudActive() && cloudState.data.weights ? cloudState.data.weights : store.get(weightRecordsKey, []);
+      return source
         .map(record => ({
           ...record,
           zhaojun: record.zhaojun === "" || record.zhaojun == null ? null : Number(record.zhaojun),
@@ -1885,6 +2377,10 @@
 
     function saveWeightRecords(records) {
       store.set(weightRecordsKey, records);
+      if (cloudActive()) {
+        cloudState.data.weights = records;
+        syncWeightRecordsToCloud(records);
+      }
     }
 
     function latestWeightFor(records, key) {
@@ -2054,7 +2550,7 @@
     }
 
     function renderIdeas() {
-      const shuffled = [...ideas].sort(() => Math.random() - .5).slice(0, 4);
+      const shuffled = [...ideas].sort(() => Math.random() - .5).slice(0, 3);
       document.querySelector("#ideaGrid").innerHTML = shuffled.map(item => `<div class="idea">${item}</div>`).join("");
     }
 
@@ -2068,6 +2564,8 @@
     }
 
     function setAlbumUnlocked(isUnlocked) {
+      document.querySelector("#albumShell").classList.toggle("locked", !isUnlocked);
+      document.querySelector("#albumPhotosPanel").classList.toggle("hidden", !isUnlocked);
       document.querySelector("#albumUploadBox").classList.toggle("hidden", !isUnlocked);
       document.querySelector("#albumLock").classList.toggle("hidden", !isUnlocked);
       document.querySelector("#albumAuthButton").textContent = isUnlocked ? "已解锁" : "解锁相册";
@@ -2125,15 +2623,39 @@
       grid.innerHTML = cards.join("");
     }
 
+    async function getAlbumMeta() {
+      if (cloudState.client && cloudState.user) {
+        const result = await cloudState.client
+          .from("app_settings")
+          .select("value")
+          .eq("key", albumMetaKey)
+          .maybeSingle();
+        if (result.error) throw result.error;
+        return result.data?.value || null;
+      }
+      return store.get(albumMetaKey, null);
+    }
+
+    async function saveAlbumMeta(meta) {
+      store.set(albumMetaKey, meta);
+      if (!cloudState.client || !cloudState.user) return;
+      const result = await cloudState.client.from("app_settings").upsert({
+        key: albumMetaKey,
+        value: meta,
+        updated_at: new Date().toISOString()
+      });
+      if (result.error) throw result.error;
+    }
+
     async function unlockAlbum(password) {
-      let meta = store.get(albumMetaKey, null);
+      let meta = await getAlbumMeta();
       if (!meta) {
         const salt = crypto.getRandomValues(new Uint8Array(16));
         meta = {
           salt: bytesToBase64(salt),
           passwordHash: await sha256Base64(`${bytesToBase64(salt)}:${password}`)
         };
-        store.set(albumMetaKey, meta);
+        await saveAlbumMeta(meta);
       } else {
         const hash = await sha256Base64(`${meta.salt}:${password}`);
         if (hash !== meta.passwordHash) throw new Error("密码不正确");
@@ -2141,7 +2663,7 @@
 
       albumKey = await deriveAlbumKey(password, base64ToBytes(meta.salt));
       setAlbumUnlocked(true);
-      setAlbumStatus("相册已解锁。本页刷新或点击锁定后，需要重新输入密码。");
+      setAlbumStatus(cloudState.client && cloudState.user ? "云端相册已解锁。照片会加密后上传，只有知道相册密码才能解密查看。" : "相册已解锁。本页刷新或点击锁定后，需要重新输入密码。");
       await renderAlbum();
     }
 
@@ -2164,7 +2686,7 @@
           data: encrypted
         });
       }
-      setAlbumStatus(`已加密保存 ${imageFiles.length} 张照片，只存在当前浏览器里。`);
+      setAlbumStatus(cloudState.client && cloudState.user ? `已加密上传 ${imageFiles.length} 张照片，两个人登录后都能查看。` : `已加密保存 ${imageFiles.length} 张照片，只存在当前浏览器里。`);
       await renderAlbum();
     }
 
@@ -2177,10 +2699,11 @@
     }
 
     function getMemories() {
-      const memories = store.get("couple-memories", [
+      const source = cloudActive() && cloudState.data.memories ? cloudState.data.memories : store.get(memoryRecordsKey, [
         { id: "memory-start", title: "在一起的第一天", text: "2025 年 11 月 11 日，从这天开始，很多日子都有了新的意义。", date: "2025-11-11" },
-        { id: "memory-weekend", title: "周末愿望", text: "每周末一起完成一件小事，不赶路，只好好相处。", date: new Date().toISOString().slice(0, 10) }
-      ]).map(memory => ({
+        { id: "memory-weekend", title: "周末愿望", text: "每周末一起完成一件小事，不赶路，只好好相处。", date: todayIso() }
+      ]);
+      const memories = source.map(memory => ({
         id: memory.id || `memory-${crypto.randomUUID()}`,
         title: memory.title,
         text: memory.text,
@@ -2191,12 +2714,19 @@
     }
 
     function saveMemories(memories) {
-      store.set("couple-memories", memories);
+      store.set(memoryRecordsKey, memories);
+      if (cloudActive()) {
+        cloudState.data.memories = memories;
+        syncMemoriesToCloud(memories);
+      }
     }
 
     function renderMemories() {
       const memories = getMemories();
-      document.querySelector("#memoryWall").innerHTML = memories.map(memory => `
+      const firstRowCount = window.matchMedia("(max-width: 640px)").matches ? 1 : 3;
+      const visibleMemories = memories.slice(0, firstRowCount);
+      const hiddenMemories = memories.slice(firstRowCount);
+      const renderMemory = memory => `
         <article class="note">
           <div>
             <h3>${escapeHtml(memory.title)}</h3>
@@ -2218,7 +2748,23 @@
             </span>
           </footer>
         </article>
-      `).join("");
+      `;
+      document.querySelector("#memoryWall").innerHTML = `
+        ${visibleMemories.map(renderMemory).join("")}
+        ${hiddenMemories.length ? `
+          <details class="memory-more">
+            <summary>
+              <span>展开其余 ${hiddenMemories.length} 条记忆</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </summary>
+            <div class="memory-more-grid">
+              ${hiddenMemories.map(renderMemory).join("")}
+            </div>
+          </details>
+        ` : ""}
+      `;
     }
 
     function resetMemoryForm() {
@@ -2227,7 +2773,7 @@
       document.querySelector("#memorySubmitButton").textContent = "贴上墙";
       document.querySelector("#memoryTitle").value = "";
       document.querySelector("#memoryText").value = "";
-      document.querySelector("#memoryDate").value = "";
+      document.querySelector("#memoryDate").value = todayIso();
     }
 
     function escapeHtml(value) {
@@ -2278,6 +2824,44 @@
       document.querySelector("#randomIdea").addEventListener("click", renderIdeas);
 
       document.querySelector("#historySearch").addEventListener("input", renderWeekendHistory);
+
+      document.querySelector("#cloudAuthForm").addEventListener("submit", async event => {
+        event.preventDefault();
+        if (!cloudState.client) return;
+        const email = document.querySelector("#cloudEmail").value.trim();
+        const password = document.querySelector("#cloudPassword").value;
+        if (!email || !password) return;
+        setCloudStatus("正在登录云端...");
+        const { error } = await cloudState.client.auth.signInWithPassword({ email, password });
+        if (error) {
+          setCloudStatus(`登录失败：${error.message}`);
+          return;
+        }
+        document.querySelector("#cloudPassword").value = "";
+      });
+
+      document.querySelector("#cloudSignUp").addEventListener("click", async () => {
+        if (!cloudState.client) return;
+        const email = document.querySelector("#cloudEmail").value.trim();
+        const password = document.querySelector("#cloudPassword").value;
+        if (!email || !password) return;
+        setCloudStatus("正在创建云端账号...");
+        const { error } = await cloudState.client.auth.signUp({ email, password });
+        setCloudStatus(error ? `注册失败：${error.message}` : "注册成功。如果 Supabase 开启了邮箱确认，请先去邮箱点确认链接。");
+      });
+
+      document.querySelector("#cloudLogout").addEventListener("click", async () => {
+        if (!cloudState.client) return;
+        await cloudState.client.auth.signOut();
+        cloudState.user = null;
+        cloudState.loaded = false;
+        cloudState.data = { weekends: {}, weights: null, memories: null };
+        renderCloudAuth();
+        renderTasks();
+        renderWeightPlan();
+        renderMemories();
+        lockAlbum();
+      });
 
       for (const form of document.querySelectorAll(".person-weight-form")) {
         form.addEventListener("submit", event => {
@@ -2449,18 +3033,25 @@
 
       window.addEventListener("resize", resize);
       window.addEventListener("resize", renderWeightPlan);
+      window.addEventListener("resize", renderMemories);
       resize();
       draw();
     }
 
-    renderDates();
-    renderTasks();
-    renderIdeas();
-    renderWeightPlan();
-    renderAlbum();
-    renderMemories();
-    initEvents();
-    initSky();
+    async function boot() {
+      renderDates();
+      initEvents();
+      await initCloud();
+      renderTasks();
+      renderIdeas();
+      renderWeightPlan();
+      await renderAlbum();
+      renderMemories();
+      resetMemoryForm();
+      initSky();
+    }
+
+    boot();
   </script>
 </body>
 </html>
