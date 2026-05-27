@@ -1935,12 +1935,15 @@
       const existing = await cloudState.client.from("memories").select("id");
       if (existing.error) {
         reportCloudError(existing.error);
-        return;
+        throw existing.error;
       }
       const staleIds = existing.data.map(memory => memory.id).filter(id => !ids.includes(id));
       if (staleIds.length) {
         const removed = await cloudState.client.from("memories").delete().in("id", staleIds);
-        if (removed.error) reportCloudError(removed.error);
+        if (removed.error) {
+          reportCloudError(removed.error);
+          throw removed.error;
+        }
       }
       if (!memories.length) return;
       const { error } = await cloudState.client.from("memories").upsert(memories.map(memory => ({
@@ -1950,7 +1953,10 @@
         date: memory.date || null,
         updated_at: new Date().toISOString()
       })));
-      if (error) reportCloudError(error);
+      if (error) {
+        reportCloudError(error);
+        throw error;
+      }
     }
 
     const fmt = new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric" });
@@ -2709,15 +2715,14 @@
         text: memory.text,
         date: memory.date || ""
       }));
-      saveMemories(memories);
       return memories.sort((a, b) => (a.date || "9999-12-31").localeCompare(b.date || "9999-12-31"));
     }
 
-    function saveMemories(memories) {
+    async function saveMemories(memories) {
       store.set(memoryRecordsKey, memories);
       if (cloudActive()) {
         cloudState.data.memories = memories;
-        syncMemoriesToCloud(memories);
+        await syncMemoriesToCloud(memories);
       }
     }
 
@@ -2934,27 +2939,43 @@
         await renderAlbum();
       });
 
-      document.querySelector("#memoryForm").addEventListener("submit", event => {
+      document.querySelector("#memoryForm").addEventListener("submit", async event => {
         event.preventDefault();
         const editId = document.querySelector("#memoryEditId");
         const title = document.querySelector("#memoryTitle");
         const text = document.querySelector("#memoryText");
         const date = document.querySelector("#memoryDate");
+        const submitButton = document.querySelector("#memorySubmitButton");
         if (!title.value.trim() || !text.value.trim()) return;
         const memory = {
           id: editId.value || `memory-${crypto.randomUUID()}`,
           title: title.value.trim(),
           text: text.value.trim(),
-          date: date.value || new Date().toISOString().slice(0, 10)
+          date: date.value || todayIso()
         };
         const memories = getMemories().filter(item => item.id !== memory.id);
         memories.push(memory);
-        saveMemories(memories);
-        resetMemoryForm();
-        renderMemories();
+        const previousButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = cloudActive() ? "同步中..." : "保存中...";
+        try {
+          await saveMemories(memories);
+          resetMemoryForm();
+          renderMemories();
+          if (cloudActive()) setCloudStatus("记忆便签已同步到云端。");
+        } catch {
+          setCloudStatus("记忆便签同步失败，请检查 Supabase 的 memories 表权限和 allowed_users 邮箱。");
+        } finally {
+          submitButton.disabled = false;
+          if (document.querySelector("#memoryEditId").value) {
+            submitButton.textContent = "保存修改";
+          } else {
+            submitButton.textContent = previousButtonText === "保存修改" ? "保存修改" : "贴上墙";
+          }
+        }
       });
 
-      document.querySelector("#memoryWall").addEventListener("click", event => {
+      document.querySelector("#memoryWall").addEventListener("click", async event => {
         const editButton = event.target.closest("[data-memory-edit]");
         const memories = getMemories();
         if (editButton) {
@@ -2972,9 +2993,14 @@
 
         const removeButton = event.target.closest("[data-memory-remove]");
         if (!removeButton) return;
-        saveMemories(memories.filter(memory => memory.id !== removeButton.dataset.memoryRemove));
-        resetMemoryForm();
-        renderMemories();
+        try {
+          await saveMemories(memories.filter(memory => memory.id !== removeButton.dataset.memoryRemove));
+          resetMemoryForm();
+          renderMemories();
+          if (cloudActive()) setCloudStatus("记忆便签已从云端删除。");
+        } catch {
+          setCloudStatus("删除便签失败，请稍后再试。");
+        }
       });
     }
 
