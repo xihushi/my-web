@@ -515,6 +515,11 @@
 
     .memory-planner {
       grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr);
+      align-items: stretch;
+    }
+
+    #memoryForm {
+      min-height: 320px;
     }
 
     .panel {
@@ -1094,8 +1099,11 @@
     .memory-wall {
       display: grid;
       grid-template-columns: repeat(3, minmax(180px, 1fr));
+      grid-template-rows: minmax(320px, 1fr) auto;
       gap: 12px;
       min-width: 0;
+      height: 100%;
+      align-items: stretch;
     }
 
     .memory-more {
@@ -1143,7 +1151,7 @@
 
     .note {
       min-width: 0;
-      height: 170px;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -1159,6 +1167,8 @@
       min-height: 0;
       overflow: hidden;
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .note h3 {
@@ -1173,10 +1183,11 @@
       line-height: 1.7;
       overflow-wrap: anywhere;
       white-space: pre-line;
-      max-height: 92px;
+      min-height: 0;
+      flex: 1;
       overflow-y: auto;
       padding-right: 6px;
-      padding-bottom: 10px;
+      padding-bottom: 14px;
       scrollbar-width: thin;
     }
 
@@ -1394,6 +1405,19 @@
 
       .history-score {
         justify-self: start;
+      }
+
+      #memoryForm {
+        min-height: 0;
+      }
+
+      .memory-wall {
+        grid-template-rows: none;
+        height: auto;
+      }
+
+      .note {
+        min-height: 220px;
       }
     }
   </style>
