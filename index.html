@@ -1100,20 +1100,21 @@
 
     .memory-more {
       grid-column: 1 / -1;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(159, 39, 56, .32);
       border-radius: var(--radius);
-      background: rgba(251, 250, 246, .58);
+      background: rgba(159, 39, 56, .055);
       overflow: hidden;
+      margin-top: 2px;
     }
 
     .memory-more summary {
-      min-height: 54px;
+      min-height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
       padding: 0 14px;
-      color: var(--muted);
+      color: var(--rose);
       cursor: pointer;
       list-style: none;
       font-weight: 850;
@@ -1137,6 +1138,7 @@
       grid-template-columns: repeat(3, minmax(180px, 1fr));
       gap: 12px;
       padding: 0 14px 14px;
+      border-top: 1px solid rgba(159, 39, 56, .14);
     }
 
     .note {
@@ -2727,7 +2729,7 @@
     }
 
     function renderMemories() {
-      const memories = getMemories();
+      const memories = [...getMemories()].sort((a, b) => (b.date || "0000-01-01").localeCompare(a.date || "0000-01-01"));
       const firstRowCount = window.matchMedia("(max-width: 640px)").matches ? 1 : 3;
       const visibleMemories = memories.slice(0, firstRowCount);
       const hiddenMemories = memories.slice(firstRowCount);
@@ -2759,7 +2761,7 @@
         ${hiddenMemories.length ? `
           <details class="memory-more">
             <summary>
-              <span>展开其余 ${hiddenMemories.length} 条记忆</span>
+              <span>展开全部记忆（还有 ${hiddenMemories.length} 条）</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
