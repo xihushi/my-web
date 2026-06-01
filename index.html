@@ -986,112 +986,6 @@
       font-weight: 850;
     }
 
-    .album-shell {
-      display: grid;
-      grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr);
-      gap: 14px;
-      align-items: start;
-    }
-
-    .album-shell.locked {
-      grid-template-columns: 1fr;
-    }
-
-    .album-lock {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 10px;
-      align-items: start;
-    }
-
-    .album-status {
-      grid-column: 1 / -1;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .album-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .album-upload {
-      position: relative;
-      min-height: 136px;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-      border: 1px dashed var(--line);
-      border-radius: var(--radius);
-      color: var(--muted);
-      background: rgba(255, 255, 255, .42);
-      text-align: center;
-      line-height: 1.65;
-      cursor: pointer;
-    }
-
-    .album-upload input {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
-
-    .album-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .album-card {
-      position: relative;
-      min-height: 210px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: rgba(255, 255, 255, .52);
-    }
-
-    .album-card img {
-      width: 100%;
-      height: 210px;
-      display: block;
-      object-fit: cover;
-      filter: saturate(.9) contrast(1.04);
-    }
-
-    .album-caption {
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 9px 10px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.35;
-      background: rgba(251, 250, 246, .9);
-    }
-
-    .album-caption strong {
-      color: var(--ink);
-      font-size: 13px;
-    }
-
-    .album-empty {
-      min-height: 210px;
-      display: grid;
-      place-items: center;
-      border: 1px dashed var(--line);
-      border-radius: var(--radius);
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.65;
-      padding: 18px;
-    }
-
     .hidden {
       display: none !important;
     }
@@ -1161,6 +1055,65 @@
       padding: 16px;
       background: rgba(251, 250, 246, .84);
       box-shadow: none;
+    }
+
+    .memory-photo-field {
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .memory-photo-trigger {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: rgba(255, 255, 255, .42);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .memory-photo-trigger input {
+      display: none;
+    }
+
+    .memory-photo-preview {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .42);
+    }
+
+    .memory-photo-preview img {
+      width: 90px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+
+    .memory-photo-preview span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .note-image {
+      width: 100%;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid var(--line);
+      margin-bottom: 10px;
+      flex: 0 0 auto;
     }
 
     .note-body {
@@ -1271,9 +1224,7 @@
 
     @media (max-width: 920px) {
       .hero,
-      .planner,
-      .album-shell,
-      .album-lock {
+      .planner {
         grid-template-columns: 1fr;
       }
 
@@ -1337,7 +1288,6 @@
       .memory-wall,
       .memory-more-grid,
       .idea-grid,
-      .album-grid,
       .weight-summary,
       .weight-form,
       .weight-forms,
@@ -1441,7 +1391,6 @@
       <nav class="nav" aria-label="页面导航">
         <a href="#days">纪念日</a>
         <a href="#weekend">周末打卡</a>
-        <a href="#album">私密相册</a>
         <a href="#memory">小记忆</a>
       </nav>
     </header>
@@ -1719,54 +1668,28 @@
           <input class="field" id="memoryTitle" maxlength="22" placeholder="标题，比如：第一次一起吃火锅">
           <div style="height: 8px"></div>
           <textarea class="field" id="memoryText" maxlength="120" placeholder="写一点点细节"></textarea>
+          <div class="memory-photo-field">
+            <input id="memoryImageData" type="hidden">
+            <label class="memory-photo-trigger">
+              <input id="memoryImage" type="file" accept="image/*">
+              给这条便签加一张照片
+            </label>
+            <div class="memory-photo-preview hidden" id="memoryImagePreview">
+              <img id="memoryImagePreviewImg" alt="便签照片预览">
+              <span>照片会压缩后保存到这条便签里。</span>
+              <button class="icon-btn" type="button" id="memoryImageRemove" title="移除照片">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
           <div class="form-row">
             <input class="field" id="memoryDate" type="date">
             <button class="small-btn" id="memorySubmitButton" type="submit">贴上墙</button>
           </div>
         </form>
         <div class="memory-wall" id="memoryWall"></div>
-      </div>
-    </section>
-
-    <section class="section" id="album">
-      <div class="section-head">
-        <div>
-          <h2>私密相册</h2>
-          <p>只存在当前浏览器里的加密相册，照片不会上传到任何地方。</p>
-        </div>
-      </div>
-
-      <div class="album-shell locked" id="albumShell">
-        <article class="panel">
-          <div class="weekend-title">
-            <strong>相册密码</strong>
-            <button class="icon-btn hidden" id="albumLock" title="锁定相册">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v10H6V11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-          <form class="album-lock" id="albumAuthForm">
-            <input class="field" id="albumPassword" type="password" minlength="4" autocomplete="new-password" placeholder="设置或输入相册密码">
-            <button class="small-btn" type="submit" id="albumAuthButton">解锁相册</button>
-            <p class="album-status" id="albumStatus">第一次使用会把这个密码设置为相册密码。之后上传的照片会在本地加密保存。</p>
-          </form>
-        </article>
-
-        <article class="panel hidden" id="albumPhotosPanel">
-          <div class="weekend-title">
-            <strong>我们的私密照片</strong>
-            <span class="history-meta" id="albumCount">未解锁</span>
-          </div>
-          <label class="album-upload hidden" id="albumUploadBox">
-            <input id="albumFiles" type="file" accept="image/*" multiple>
-            <span>点击选择照片。上传后会用相册密码加密，只保存在这个浏览器里。</span>
-          </label>
-          <div style="height: 12px"></div>
-          <div class="album-grid" id="albumGrid">
-            <div class="album-empty">输入相册密码后查看你们的私密照片。</div>
-          </div>
-        </article>
       </div>
     </section>
 
@@ -1779,7 +1702,6 @@
   <script>
     const startDate = new Date("2025-11-11T00:00:00");
     const weekendKeyPrefix = "couple-weekend-";
-    const albumMetaKey = "couple-album-meta";
     const weightRecordsKey = "couple-weight-records";
     const memoryRecordsKey = "couple-memories";
     const cloudConfig = {
@@ -1791,8 +1713,6 @@
       zhaojun: { name: "陈诏君", target: 110, color: "#9f2738" },
       litao: { name: "李涛", target: 150, color: "#365d8d" }
     };
-    let albumKey = null;
-    let albumObjectUrls = [];
     const cloudState = {
       client: null,
       user: null,
@@ -1866,7 +1786,7 @@
       if (!configured) {
         setCloudStatus("云数据库尚未配置：先在 supabase-schema.sql 建库，再把 Supabase URL 和 anon key 填到 index.html 的 cloudConfig。");
       } else if (cloudState.user && cloudState.loaded) {
-        setCloudStatus("云端同步已开启。周末记录、体重、便签和私密相册会同步给登录的两个人。");
+        setCloudStatus("云端同步已开启。周末记录、体重和便签会同步给登录的两个人。");
       } else if (cloudState.user) {
         setCloudStatus("正在读取云端记录...");
       } else {
@@ -1897,7 +1817,6 @@
         renderTasks();
         renderWeightPlan();
         renderMemories();
-        await renderAlbum();
       });
 
       renderCloudAuth();
@@ -1912,7 +1831,7 @@
         const [weekends, weights, memories] = await Promise.all([
           cloudState.client.from("weekend_plans").select("week_start,tasks").order("week_start", { ascending: false }),
           cloudState.client.from("weight_records").select("date,zhaojun,litao,note").order("date", { ascending: true }),
-          cloudState.client.from("memories").select("id,title,text,date").order("date", { ascending: true })
+          cloudState.client.from("memories").select("id,title,text,date,image").order("date", { ascending: true })
         ]);
         if (weekends.error) throw weekends.error;
         if (weights.error) throw weights.error;
@@ -1931,7 +1850,8 @@
           id: memory.id,
           title: memory.title,
           text: memory.text,
-          date: memory.date || ""
+          date: memory.date || "",
+          image: memory.image || ""
         }));
         cloudState.loaded = true;
       } catch (error) {
@@ -1998,6 +1918,7 @@
         title: memory.title,
         text: memory.text,
         date: memory.date || null,
+        image: memory.image || null,
         updated_at: new Date().toISOString()
       })));
       if (error) {
@@ -2008,136 +1929,6 @@
 
     const fmt = new Intl.DateTimeFormat("zh-CN", { year: "numeric", month: "long", day: "numeric" });
     const lunarFmt = new Intl.DateTimeFormat("zh-CN-u-ca-chinese", { year: "numeric", month: "numeric", day: "numeric" });
-
-    function bytesToBase64(bytes) {
-      return btoa(String.fromCharCode(...new Uint8Array(bytes)));
-    }
-
-    function base64ToBytes(value) {
-      return Uint8Array.from(atob(value), char => char.charCodeAt(0));
-    }
-
-    async function sha256Base64(text) {
-      return bytesToBase64(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)));
-    }
-
-    async function deriveAlbumKey(password, salt) {
-      const baseKey = await crypto.subtle.importKey(
-        "raw",
-        new TextEncoder().encode(password),
-        "PBKDF2",
-        false,
-        ["deriveKey"]
-      );
-      return crypto.subtle.deriveKey(
-        { name: "PBKDF2", salt, iterations: 160000, hash: "SHA-256" },
-        baseKey,
-        { name: "AES-GCM", length: 256 },
-        false,
-        ["encrypt", "decrypt"]
-      );
-    }
-
-    function openAlbumDb() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open("couple-private-album", 1);
-        request.onupgradeneeded = () => request.result.createObjectStore("photos", { keyPath: "id" });
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    async function albumTransaction(mode, callback) {
-      const db = await openAlbumDb();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction("photos", mode);
-        const store = tx.objectStore("photos");
-        const result = callback(store);
-        tx.oncomplete = () => {
-          db.close();
-          resolve(result);
-        };
-        tx.onerror = () => {
-          db.close();
-          reject(tx.error);
-        };
-      });
-    }
-
-    function getAllAlbumRecords() {
-      if (cloudState.client && cloudState.user) {
-        return cloudState.client
-          .from("album_photos")
-          .select("id,file_name,file_type,file_path,iv,created_at")
-          .order("created_at", { ascending: false })
-          .then(async result => {
-            if (result.error) throw result.error;
-            return Promise.all(result.data.map(async record => {
-              const download = await cloudState.client.storage.from("couple-album").download(record.file_path);
-              if (download.error) throw download.error;
-              return {
-                id: record.id,
-                name: record.file_name,
-                type: record.file_type,
-                createdAt: new Date(record.created_at).getTime(),
-                iv: record.iv,
-                data: await download.data.arrayBuffer(),
-                storagePath: record.file_path
-              };
-            }));
-          });
-      }
-
-      return albumTransaction("readonly", store => {
-        return new Promise((resolve, reject) => {
-          const request = store.getAll();
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
-        });
-      });
-    }
-
-    function putAlbumRecord(record) {
-      if (cloudState.client && cloudState.user) {
-        const filePath = `${record.id}.bin`;
-        return cloudState.client.storage
-          .from("couple-album")
-          .upload(filePath, new Blob([record.data], { type: "application/octet-stream" }), { upsert: true })
-          .then(async upload => {
-            if (upload.error) throw upload.error;
-            const result = await cloudState.client.from("album_photos").upsert({
-              id: record.id,
-              file_name: record.name,
-              file_type: record.type,
-              file_path: filePath,
-              iv: record.iv,
-              created_at: new Date(record.createdAt).toISOString()
-            });
-            if (result.error) throw result.error;
-          });
-      }
-
-      return albumTransaction("readwrite", store => store.put(record));
-    }
-
-    function deleteAlbumRecord(id) {
-      if (cloudState.client && cloudState.user) {
-        return cloudState.client
-          .from("album_photos")
-          .select("file_path")
-          .eq("id", id)
-          .single()
-          .then(async result => {
-            if (result.error) throw result.error;
-            const removedFile = await cloudState.client.storage.from("couple-album").remove([result.data.file_path]);
-            if (removedFile.error) throw removedFile.error;
-            const removedRecord = await cloudState.client.from("album_photos").delete().eq("id", id);
-            if (removedRecord.error) throw removedRecord.error;
-          });
-      }
-
-      return albumTransaction("readwrite", store => store.delete(id));
-    }
 
     function todayStart() {
       const now = new Date();
@@ -2607,150 +2398,6 @@
       document.querySelector("#ideaGrid").innerHTML = shuffled.map(item => `<div class="idea">${item}</div>`).join("");
     }
 
-    function clearAlbumUrls() {
-      albumObjectUrls.forEach(url => URL.revokeObjectURL(url));
-      albumObjectUrls = [];
-    }
-
-    function setAlbumStatus(message) {
-      document.querySelector("#albumStatus").textContent = message;
-    }
-
-    function setAlbumUnlocked(isUnlocked) {
-      document.querySelector("#albumShell").classList.toggle("locked", !isUnlocked);
-      document.querySelector("#albumPhotosPanel").classList.toggle("hidden", !isUnlocked);
-      document.querySelector("#albumUploadBox").classList.toggle("hidden", !isUnlocked);
-      document.querySelector("#albumLock").classList.toggle("hidden", !isUnlocked);
-      document.querySelector("#albumAuthButton").textContent = isUnlocked ? "已解锁" : "解锁相册";
-      document.querySelector("#albumAuthButton").disabled = isUnlocked;
-      document.querySelector("#albumPassword").value = "";
-      document.querySelector("#albumPassword").disabled = isUnlocked;
-    }
-
-    async function renderAlbum() {
-      const grid = document.querySelector("#albumGrid");
-      clearAlbumUrls();
-      if (!albumKey) {
-        document.querySelector("#albumCount").textContent = "未解锁";
-        grid.innerHTML = `<div class="album-empty">输入相册密码后查看你们的私密照片。</div>`;
-        return;
-      }
-
-      const records = (await getAllAlbumRecords()).sort((a, b) => b.createdAt - a.createdAt);
-      document.querySelector("#albumCount").textContent = `${records.length} 张照片`;
-      if (!records.length) {
-        grid.innerHTML = `<div class="album-empty">相册还是空的。选几张只属于你们的照片放进来。</div>`;
-        return;
-      }
-
-      const cards = await Promise.all(records.map(async record => {
-        try {
-          const decrypted = await crypto.subtle.decrypt(
-            { name: "AES-GCM", iv: base64ToBytes(record.iv) },
-            albumKey,
-            record.data
-          );
-          const url = URL.createObjectURL(new Blob([decrypted], { type: record.type }));
-          albumObjectUrls.push(url);
-          return `
-            <article class="album-card">
-              <img src="${url}" alt="${escapeHtml(record.name)}">
-              <div class="album-caption">
-                <span>
-                  <strong>${escapeHtml(record.name)}</strong><br>
-                  ${new Date(record.createdAt).toLocaleDateString("zh-CN")}
-                </span>
-                <button class="icon-btn" type="button" data-album-remove="${record.id}" title="删除这张照片">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                </button>
-              </div>
-            </article>
-          `;
-        } catch {
-          return `<div class="album-empty">有一张照片无法解密，可能密码不匹配。</div>`;
-        }
-      }));
-
-      grid.innerHTML = cards.join("");
-    }
-
-    async function getAlbumMeta() {
-      if (cloudState.client && cloudState.user) {
-        const result = await cloudState.client
-          .from("app_settings")
-          .select("value")
-          .eq("key", albumMetaKey)
-          .maybeSingle();
-        if (result.error) throw result.error;
-        return result.data?.value || null;
-      }
-      return store.get(albumMetaKey, null);
-    }
-
-    async function saveAlbumMeta(meta) {
-      store.set(albumMetaKey, meta);
-      if (!cloudState.client || !cloudState.user) return;
-      const result = await cloudState.client.from("app_settings").upsert({
-        key: albumMetaKey,
-        value: meta,
-        updated_at: new Date().toISOString()
-      });
-      if (result.error) throw result.error;
-    }
-
-    async function unlockAlbum(password) {
-      let meta = await getAlbumMeta();
-      if (!meta) {
-        const salt = crypto.getRandomValues(new Uint8Array(16));
-        meta = {
-          salt: bytesToBase64(salt),
-          passwordHash: await sha256Base64(`${bytesToBase64(salt)}:${password}`)
-        };
-        await saveAlbumMeta(meta);
-      } else {
-        const hash = await sha256Base64(`${meta.salt}:${password}`);
-        if (hash !== meta.passwordHash) throw new Error("密码不正确");
-      }
-
-      albumKey = await deriveAlbumKey(password, base64ToBytes(meta.salt));
-      setAlbumUnlocked(true);
-      setAlbumStatus(cloudState.client && cloudState.user ? "云端相册已解锁。照片会加密后上传，只有知道相册密码才能解密查看。" : "相册已解锁。本页刷新或点击锁定后，需要重新输入密码。");
-      await renderAlbum();
-    }
-
-    async function saveAlbumFiles(files) {
-      if (!albumKey) return;
-      const imageFiles = Array.from(files).filter(file => file.type.startsWith("image/"));
-      for (const file of imageFiles) {
-        const iv = crypto.getRandomValues(new Uint8Array(12));
-        const encrypted = await crypto.subtle.encrypt(
-          { name: "AES-GCM", iv },
-          albumKey,
-          await file.arrayBuffer()
-        );
-        await putAlbumRecord({
-          id: `${Date.now()}-${crypto.randomUUID()}`,
-          name: file.name,
-          type: file.type,
-          createdAt: Date.now(),
-          iv: bytesToBase64(iv),
-          data: encrypted
-        });
-      }
-      setAlbumStatus(cloudState.client && cloudState.user ? `已加密上传 ${imageFiles.length} 张照片，两个人登录后都能查看。` : `已加密保存 ${imageFiles.length} 张照片，只存在当前浏览器里。`);
-      await renderAlbum();
-    }
-
-    function lockAlbum() {
-      albumKey = null;
-      clearAlbumUrls();
-      setAlbumUnlocked(false);
-      setAlbumStatus("相册已锁定。输入密码后才能查看照片。");
-      renderAlbum();
-    }
-
     function getMemories() {
       const source = cloudActive() && cloudState.data.memories ? cloudState.data.memories : store.get(memoryRecordsKey, [
         { id: "memory-start", title: "在一起的第一天", text: "2025 年 11 月 11 日，从这天开始，很多日子都有了新的意义。", date: "2025-11-11" },
@@ -2760,7 +2407,8 @@
         id: memory.id || `memory-${crypto.randomUUID()}`,
         title: memory.title,
         text: memory.text,
-        date: memory.date || ""
+        date: memory.date || "",
+        image: memory.image || ""
       }));
       return memories.sort((a, b) => (a.date || "9999-12-31").localeCompare(b.date || "9999-12-31"));
     }
@@ -2781,6 +2429,7 @@
       const renderMemory = memory => `
         <article class="note">
           <div class="note-body">
+            ${memory.image ? `<img class="note-image" src="${escapeHtml(memory.image)}" alt="${escapeHtml(memory.title)}的照片">` : ""}
             <h3>${escapeHtml(memory.title)}</h3>
             <p>${escapeHtml(memory.text)}</p>
           </div>
@@ -2826,6 +2475,10 @@
       document.querySelector("#memoryTitle").value = "";
       document.querySelector("#memoryText").value = "";
       document.querySelector("#memoryDate").value = todayIso();
+      document.querySelector("#memoryImage").value = "";
+      document.querySelector("#memoryImageData").value = "";
+      document.querySelector("#memoryImagePreview").classList.add("hidden");
+      document.querySelector("#memoryImagePreviewImg").removeAttribute("src");
     }
 
     function escapeHtml(value) {
@@ -2836,6 +2489,38 @@
         '"': "&quot;",
         "'": "&#039;"
       }[char]));
+    }
+
+    function setMemoryImagePreview(dataUrl) {
+      document.querySelector("#memoryImageData").value = dataUrl || "";
+      document.querySelector("#memoryImagePreview").classList.toggle("hidden", !dataUrl);
+      if (dataUrl) document.querySelector("#memoryImagePreviewImg").src = dataUrl;
+      else document.querySelector("#memoryImagePreviewImg").removeAttribute("src");
+    }
+
+    function compressImage(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = () => reject(reader.error);
+        reader.onload = () => {
+          const image = new Image();
+          image.onerror = reject;
+          image.onload = () => {
+            const maxSide = 900;
+            const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+            const width = Math.max(1, Math.round(image.width * scale));
+            const height = Math.max(1, Math.round(image.height * scale));
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const context = canvas.getContext("2d");
+            context.drawImage(image, 0, 0, width, height);
+            resolve(canvas.toDataURL("image/jpeg", .76));
+          };
+          image.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
     function initEvents() {
@@ -2912,7 +2597,6 @@
         renderTasks();
         renderWeightPlan();
         renderMemories();
-        lockAlbum();
       });
 
       for (const form of document.querySelectorAll(".person-weight-form")) {
@@ -2953,37 +2637,26 @@
         renderWeightPlan();
       });
 
-      document.querySelector("#albumAuthForm").addEventListener("submit", async event => {
-        event.preventDefault();
-        const password = document.querySelector("#albumPassword").value;
-        if (password.length < 4) {
-          setAlbumStatus("密码至少 4 位。为了更私密，建议使用更长一点的密码。");
+      document.querySelector("#memoryImage").addEventListener("change", async event => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        if (!file.type.startsWith("image/")) {
+          setCloudStatus("请选择图片文件。");
           return;
         }
+        setCloudStatus("正在处理便签照片...");
         try {
-          document.querySelector("#albumAuthButton").disabled = true;
-          setAlbumStatus("正在解锁相册...");
-          await unlockAlbum(password);
+          const dataUrl = await compressImage(file);
+          setMemoryImagePreview(dataUrl);
+          setCloudStatus(cloudActive() ? "便签照片已准备好，保存后会同步到云端。" : "便签照片已准备好。");
         } catch {
-          albumKey = null;
-          document.querySelector("#albumAuthButton").disabled = false;
-          setAlbumStatus("密码不正确，无法解锁相册。");
+          setCloudStatus("照片处理失败，请换一张照片试试。");
         }
       });
 
-      document.querySelector("#albumLock").addEventListener("click", lockAlbum);
-
-      document.querySelector("#albumFiles").addEventListener("change", async event => {
-        await saveAlbumFiles(event.target.files);
-        event.target.value = "";
-      });
-
-      document.querySelector("#albumGrid").addEventListener("click", async event => {
-        const button = event.target.closest("[data-album-remove]");
-        if (!button) return;
-        await deleteAlbumRecord(button.dataset.albumRemove);
-        setAlbumStatus("已删除这张照片。");
-        await renderAlbum();
+      document.querySelector("#memoryImageRemove").addEventListener("click", () => {
+        document.querySelector("#memoryImage").value = "";
+        setMemoryImagePreview("");
       });
 
       document.querySelector("#memoryForm").addEventListener("submit", async event => {
@@ -2992,13 +2665,15 @@
         const title = document.querySelector("#memoryTitle");
         const text = document.querySelector("#memoryText");
         const date = document.querySelector("#memoryDate");
+        const image = document.querySelector("#memoryImageData");
         const submitButton = document.querySelector("#memorySubmitButton");
         if (!title.value.trim() || !text.value.trim()) return;
         const memory = {
           id: editId.value || `memory-${crypto.randomUUID()}`,
           title: title.value.trim(),
           text: text.value.trim(),
-          date: date.value || todayIso()
+          date: date.value || todayIso(),
+          image: image.value
         };
         const memories = getMemories().filter(item => item.id !== memory.id);
         memories.push(memory);
@@ -3034,6 +2709,8 @@
           document.querySelector("#memoryTitle").value = memory.title;
           document.querySelector("#memoryText").value = memory.text;
           document.querySelector("#memoryDate").value = memory.date;
+          document.querySelector("#memoryImage").value = "";
+          setMemoryImagePreview(memory.image || "");
           document.querySelector("#memoryForm").scrollIntoView({ behavior: "smooth", block: "center" });
           return;
         }
@@ -3118,7 +2795,6 @@
       renderTasks();
       renderIdeas();
       renderWeightPlan();
-      await renderAlbum();
       renderMemories();
       resetMemoryForm();
       initSky();
